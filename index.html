@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XO</title>
+    <link rel="stylesheet" href="normal.css">
+    <style>
+        div{
+            border: 1px solid black;
+        }
+        .container{
+            border: none;
+        }
+        table{
+            border: 1px solid black;
+            border-radius: 15px;
+            padding: 3px;
+            margin: 50px auto 0px auto;
+        }
+        th{
+            border: 1px solid black;
+            border-radius:15px ;
+            padding: 2px;
+            width: 100px;
+            height: 60px;
+            font-size: xx-large;
+        }
+        .disabledbutton {
+            pointer-events: none;
+            opacity: 0.4;
+        }
+        .win{
+            position: absolute;
+            border: none;
+            left: 50%;
+            transform: translate(-50%);
+            font-size: xxx-large;
+            transition: 1s;
+            color: #777;
+        }
+        .los{
+            position: absolute;
+            border: none;
+            left: 50%;
+            transform: translate(-50%);
+            font-size: x-large;
+            transition: 1s;
+            color: #777;
+        }
+        span{
+            color: brown;
+        }
+        .lin{
+            position: absolute;
+            z-index: 3;
+            top: 5px;
+            right: 5px;
+            font-size: x-large;
+            font-weight: bold;
+            color:rgb(29, 18, 18);
+            transition: .5s;
+            text-decoration: none;
+            margin: 0px;
+        }
+        .lin:hover{
+            color: cadetblue;
+            font-size: 35px;
+        }
+        p{
+            cursor:pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <table>
+            <tr>
+                <th class="b1" onclick="tub('b1')"></th>
+                <th class="b2" onclick="tub('b2')"></th>
+                <th class="b3" onclick="tub('b3')"></th>
+            </tr>
+            <tr>
+                <th class="b4" onclick="tub('b4')"></th>
+                <th class="b5" onclick="tub('b5')"></th>
+                <th class="b6" onclick="tub('b6')"></th>
+            </tr>
+            <tr>
+                <th class="b7" onclick="tub('b7')"></th>
+                <th class="b8" onclick="tub('b8')"></th>
+                <th class="b9" onclick="tub('b9')"></th>
+            </tr>
+        </table>
+    </div>
+    <p class="lin" onclick="location.reload();">Restart</p>
+    <script>
+        localStorage.clear();
+        function tub(e){
+            let a = document.querySelector(`.${e}`);
+            if( window.localStorage.getItem("click") == null){
+                window.localStorage.setItem("click" , "X");
+                a.innerHTML = "X";
+                window.localStorage.setItem( e , "X");
+            }else{
+                let b = window.localStorage.getItem("click");
+                if(b == "X"){
+                    a.innerHTML = "O";
+                    window.localStorage.setItem("click" , "O");
+                    window.localStorage.setItem( e , "O");
+                }else if(b == "O"){
+                    a.innerHTML = "X";
+                    window.localStorage.setItem("click" , "X");
+                    window.localStorage.setItem( e , "X");
+                }
+            }
+            function win(a,b,c){
+                a.style.backgroundColor = "green";
+                b.style.backgroundColor = "green";
+                c.style.backgroundColor = "green";
+            }
+            function disa(){
+                let table1 = document.querySelector("table");
+                table1.classList.add("disabledbutton");
+                let cr = document.createElement("div");
+                let span = document.createElement("span");
+                let rr = window.localStorage.getItem("click");
+                let crt = document.createTextNode(" is Winner");
+                let spantx = document.createTextNode(rr);
+                let cont = document.querySelector(".container");
+                cont.appendChild(cr);
+                span.appendChild(spantx);
+                cr.appendChild(span);
+                cr.appendChild(crt);
+                cr.classList.add("win");
+            }
+            function los(){
+                let table1 = document.querySelector("table");
+                table1.classList.add("disabledbutton");
+                let cr = document.createElement("div");
+                // let span = document.createElement("span");
+                let rr = window.localStorage.getItem("click");
+                let crt = document.createTextNode("No One Win Please Restart Game");
+                // let spantx = document.createTextNode(rr);
+                let cont = document.querySelector(".container");
+                cont.appendChild(cr);
+                // span.appendChild(spantx);
+                // cr.appendChild(span);
+                cr.appendChild(crt);
+                cr.classList.add("los");
+            }
+            let b1 = window.localStorage.getItem("b1");
+            let s1 = document.querySelector(".b1");
+            let b2 = window.localStorage.getItem("b2");
+            let s2 = document.querySelector(".b2");
+            let b3 = window.localStorage.getItem("b3");
+            let s3 = document.querySelector(".b3");
+            let b4 = window.localStorage.getItem("b4");
+            let s4 = document.querySelector(".b4");
+            let b5 = window.localStorage.getItem("b5");
+            let s5 = document.querySelector(".b5");
+            let b6 = window.localStorage.getItem("b6");
+            let s6 = document.querySelector(".b6");
+            let b7 = window.localStorage.getItem("b7");
+            let s7 = document.querySelector(".b7");
+            let b8 = window.localStorage.getItem("b8");
+            let s8 = document.querySelector(".b8");
+            let b9 = window.localStorage.getItem("b9");
+            let s9 = document.querySelector(".b9");
+            if(b1 == b2 && b2 == b3 && b1 != null){
+                win(s1,s2,s3);
+                disa();
+            }else if(b1 == b4 && b4 == b7 && b1 != null){
+                win(s1,s4,s7);
+                disa();
+            }else if(b2 == b5 && b5 == b8 && b2 != null){
+                win(s2,s5,s8);
+                disa();
+            }else if(b3 == b6 && b3 == b9 && b3 != null){
+                win(s3,s6,s9);
+                disa();
+            }else if(b4 == b5 && b5 == b6 && b4 != null){
+                win(s4,s5,s6);
+                disa();
+            }else if(b7 == b8 && b8 == b9 && b7 != null){
+                win(s7,s8,s9);
+                disa();
+            }else if(b1 == b5 && b5 == b9 && b1 != null){
+                win(s1,s5,s9);
+                disa();
+            }else if(b3 == b5 && b5 == b7 && b3 != null){
+                win(s3,s5,s7);
+                disa();
+            }else if (b1 != null && b2 != null && b3 != null && b4 != null && b5 != null && b6 != null && b7 != null && b8 != null && b9 != null){
+                los();
+            }
+        }
+    </script>
+</body>
+</html>
