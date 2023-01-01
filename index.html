@@ -31,6 +31,9 @@
             pointer-events: none;
             opacity: 0.4;
         }
+        .disable{
+            pointer-events: none;
+        }
         .win{
             position: absolute;
             border: none;
@@ -93,11 +96,27 @@
             </tr>
         </table>
     </div>
-    <p class="lin" onclick="location.reload();">Restart</p>
+    <p class="lin" onclick="rel()">Restart</p>
     <script>
         localStorage.clear();
+        function rel(){
+            localStorage.clear();
+            let elm = document.querySelectorAll("th");
+			let cr = document.querySelector("table");
+            for(i = 0 ; i < elm.length ; i++){
+                elm[i].innerHTML = "";
+                elm[i].classList.remove("disable");
+                elm[i].style.backgroundColor = "";
+            }
+			cr.classList.remove("disabledbutton");
+            if(document.querySelector(".win") != null){
+                document.querySelector(".win").remove();
+            }
+        }
+        
         function tub(e){
             let a = document.querySelector(`.${e}`);
+            a.classList.add("disable");
             if( window.localStorage.getItem("click") == null){
                 window.localStorage.setItem("click" , "X");
                 a.innerHTML = "X";
